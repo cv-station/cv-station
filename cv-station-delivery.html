@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>CV Station | بوابة تسليم العملاء وخطة التقديم</title>
+  <link id="favIcon" rel="icon" type="image/jpeg" href="" />
+  <link id="appleIcon" rel="apple-touch-icon" href="" />
+  <meta name="theme-color" content="#0047b3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f3f7fe;
+      --bg-card: #ffffff;
+      --bg-soft: #eaf2ff;
+      --text-primary: #071a3e;
+      --text-secondary: #3b5580;
+      --text-muted: #6b84ad;
+      --royal: #0047b3;
+      --cyan: #00a8e8;
+      --emerald: #10b981;
+      --border: #d5e3fb;
+      --shadow: 0 8px 24px rgba(6, 35, 86, 0.08);
+      --grad: linear-gradient(135deg, #062356 0%, #0047b3 58%, #00a8e8 100%);
+      --grad-emerald: linear-gradient(135deg, #047857 0%, #10b981 100%);
+    }
+    html[data-theme="dark"] {
+      --bg-main: #061024;
+      --bg-card: #0c1b38;
+      --bg-soft: #132852;
+      --text-primary: #f8fbff;
+      --text-secondary: #cbdcf7;
+      --text-muted: #8aa6d1;
+      --royal: #2d7ff9;
+      --cyan: #00d2ff;
+      --border: #1e3a6d;
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100%; overflow-x: hidden; font-family: 'Cairo', sans-serif; background: var(--bg-main); color: var(--text-primary); line-height: 1.65; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1.5px solid var(--border); padding: 10px 16px;
+    }
+    html[data-theme="dark"] .topbar { background: rgba(12, 27, 56, 0.96); }
+    .topbar-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon {
+      width: 44px; height: 44px; border-radius: 50%; background: #fff;
+      border: 2px solid var(--cyan); padding: 2px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      overflow: hidden; box-shadow: 0 4px 12px rgba(0,71,179,0.16);
+    }
+    .brand-icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+    .brand-title { font-weight: 900; font-size: 1.05rem; line-height: 1.2; }
+    .brand-sub { font-size: 0.74rem; color: var(--text-muted); font-weight: 700; }
+
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg-soft); color: var(--text-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 20px 16px 50px; }
+    .main-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; align-items: start; }
+    @media (max-width: 920px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 1.05rem; font-weight: 900; margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+    }
+
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .field label { display: block; font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 5px; }
+    .input, select, textarea {
+      width: 100%; padding: 9px 12px; border-radius: 11px;
+      border: 1.5px solid var(--border); background: var(--bg-main);
+      color: var(--text-primary); font-family: 'Cairo', sans-serif;
+      font-size: 0.86rem; font-weight: 700; outline: none; transition: 0.2s;
+    }
+    .input:focus, select:focus, textarea:focus { border-color: var(--royal); }
+
+    .pkg-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+    .pkg-pill {
+      padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--border);
+      background: var(--bg-soft); color: var(--royal); font-family: 'Cairo', sans-serif;
+      font-size: 0.78rem; font-weight: 800; cursor: pointer; transition: 0.2s;
+    }
+    .pkg-pill:hover { background: var(--royal); color: #fff; border-color: var(--royal); }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 8px; }
+    .srv-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-main); border: 1.5px solid var(--border);
+      padding: 8px 11px; border-radius: 11px; cursor: pointer;
+      font-size: 0.8rem; font-weight: 800; transition: 0.15s; user-select: none;
+    }
+    .srv-chip:hover { border-color: var(--royal); }
+    .srv-chip input { accent-color: var(--royal); width: 16px; height: 16px; cursor: pointer; }
+    .srv-chip.checked { background: var(--bg-soft); border-color: var(--royal); color: var(--royal); }
+
+    .msg-preview {
+      width: 100%; min-height: 215px; resize: vertical;
+      background: var(--bg-main); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 14px; font-family: 'Cairo', sans-serif;
+      font-size: 0.88rem; font-weight: 600; line-height: 1.75; color: var(--text-primary);
+    }
+
+    .btn {
+      font-family: 'Cairo', sans-serif; font-weight: 800; font-size: 0.85rem;
+      padding: 10px 16px; border-radius: 12px; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      transition: 0.2s; text-decoration: none; white-space: nowrap;
+    }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 6px 16px rgba(0,71,179,0.22); }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-emerald { background: var(--grad-emerald); color: #fff; box-shadow: 0 6px 16px rgba(16,185,129,0.22); }
+    .btn-outline { background: var(--bg-soft); color: var(--royal); border: 1.5px solid var(--border); }
+    .btn-sm { padding: 6px 11px; font-size: 0.78rem; border-radius: 9px; }
+
+    .actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+    .toast {
+      position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+      background: #062356; color: #fff; padding: 10px 22px; border-radius: 999px;
+      font-weight: 800; font-size: 0.84rem; z-index: 9999; display: none;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.3); text-align: center;
+    }
+
+    .pdf-card-preview {
+      background: #ffffff; color: #071a3e; border: 1.5px solid #d5e3fb;
+      border-radius: 16px; padding: 20px; margin-top: 12px;
+    }
+    .pdf-header {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid #0047b3; padding-bottom: 12px; margin-bottom: 14px;
+    }
+    .pdf-brand { display: flex; align-items: center; gap: 10px; }
+    .pdf-brand img { width: 46px; height: 46px; border-radius: 50%; border: 2px solid #00a8e8; object-fit: contain; }
+    .pdf-section-title {
+      font-size: 0.92rem; font-weight: 900; color: #0047b3;
+      margin: 12px 0 6px; display: flex; align-items: center; gap: 6px;
+    }
+    .pdf-list { padding-right: 18px; font-size: 0.83rem; font-weight: 700; color: #1e293b; }
+    .pdf-list li { margin-bottom: 5px; }
+
+    @media print {
+      body * { visibility: hidden; }
+      #printableGuide, #printableGuide * { visibility: visible; }
+      #printableGuide {
+        position: fixed; inset: 0; width: 100%; border: none; box-shadow: none;
+        padding: 24px; background: #fff !important; color: #071a3e !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast" class="toast"></div>
+
+  <header class="topbar no-print">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon"><img class="js-logo" src="" alt="CV Station" /></div>
+        <div>
+          <div class="brand-title">CV Station | بوابة التسليم وخطة التقديم</div>
+          <div class="brand-sub">تجهيز رسالة التسليم + خطة التقديم في 10 ثواني</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn btn-outline btn-sm" onclick="resetForm()">🔄 عميل جديد</button>
+        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="تغيير المظهر">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="main-grid">
+
+      <!-- المدخلات -->
+      <div class="no-print">
+        <div class="card">
+          <div class="card-title"><span>👤 1. بيانات العميل</span></div>
+          <div class="form-grid" style="margin-bottom:12px;">
+            <div class="field">
+              <label>اللقب</label>
+              <select id="clientTitle" class="input" onchange="generateOutputs()">
+                <option value="أ/">أ/ (أستاذ / أستاذة)</option>
+                <option value="م/">م/ (مهندس / مهندسة)</option>
+                <option value="د/">د/ (دكتور / دكتورة)</option>
+                <option value="">بدون لقب</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>اسم العميل *</label>
+              <input type="text" id="clientName" class="input" placeholder="مثال: أحمد محمود" oninput="generateOutputs()" />
+            </div>
+            <div class="field">
+              <label>المسمى الوظيفي / التخصص</label>
+              <input type="text" id="clientRole" class="input" placeholder="مثال: محاسب مالي، مبيعات..." oninput="generateOutputs()" />
+            </div>
+            <div class="field">
+              <label>نطاق التقديم المستهدف</label>
+              <select id="targetRegion" class="input" onchange="generateOutputs()">
+                <option value="both">🌍 مصر والخليج معاً</option>
+                <option value="egypt">🇪🇬 داخل مصر</option>
+                <option value="gulf">🇦🇪🇸🇦 دول الخليج</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>رقم واتساب العميل (اختياري — للإرسال المباشر بضغطة زر)</label>
+            <input type="tel" id="clientPhone" class="input" dir="ltr" placeholder="010xxxxxxxx" oninput="updateWaLinks()" />
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>📦 2. الخدمات التي تم تسليمها</span></div>
+          <div style="font-size:0.76rem;color:var(--text-muted);font-weight:800;margin-bottom:6px;">اختيار سريع للباقات:</div>
+          <div class="pkg-row">
+            <button type="button" class="pkg-pill" onclick="applyPreset('launch')">🚀 باقة الانطلاق</button>
+            <button type="button" class="pkg-pill" onclick="applyPreset('excellence')">💎 باقة التميز</button>
+            <button type="button" class="pkg-pill" onclick="applyPreset('pro')">👑 باقة الاحتراف</button>
+            <button type="button" class="pkg-pill" onclick="applyPreset('clear')">مسح الاختيارات</button>
+          </div>
+          <div class="services-grid" id="servicesContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>🔗 3. رابط التقييم (Facebook Page)</span></div>
+          <div class="field">
+            <label>رابط صفحتك (محفوظ تلقائياً)</label>
+            <input type="url" id="reviewUrl" class="input" dir="ltr" value="https://www.facebook.com/share/1CHD5iiX5a/" oninput="saveReviewUrl()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- المخرجات -->
+      <div>
+        <div class="card no-print">
+          <div class="card-title"><span>✅ 1. رسالة التسليم للواتساب (جاهزة للنسخ أو الإرسال)</span></div>
+          <textarea id="deliveryOutput" class="msg-preview" oninput="updateWaLinks()"></textarea>
+          <div class="actions-row">
+            <button class="btn btn-primary" style="flex:1;" onclick="copyText('deliveryOutput', '📋 تم نسخ رسالة التسليم')">📋 نسخ الرسالة</button>
+            <a id="waDeliveryBtn" href="#" target="_blank" class="btn btn-emerald" style="flex:1;">💬 إرسال واتساب</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title no-print">
+            <span>🎯 2. خطة التقديم السريعة (هدية مجانية للعميل)</span>
+            <button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ حفظ كـ PDF</button>
+          </div>
+
+          <div class="no-print" style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.78rem;font-weight:800;color:var(--text-secondary);margin-bottom:4px;">نسخة مختصرة لإرسالها على الواتساب:</label>
+            <textarea id="planWaOutput" class="msg-preview" style="min-height:175px;" oninput="updateWaLinks()"></textarea>
+            <div class="actions-row">
+              <button class="btn btn-primary" style="flex:1;" onclick="copyText('planWaOutput', '📋 تم نسخ خطة التقديم')">📋 نسخ الخطة للواتساب</button>
+              <a id="waPlanBtn" href="#" target="_blank" class="btn btn-emerald" style="flex:1;">💬 إرسال الخطة واتساب</a>
+            </div>
+          </div>
+
+          <div id="printableGuide" class="pdf-card-preview">
+            <div class="pdf-header">
+              <div class="pdf-brand">
+                <img class="js-logo" src="" alt="CV Station" />
+                <div>
+                  <div style="font-weight:900;font-size:1.05rem;color:#062356;">CV Station</div>
+                  <div style="font-size:0.76rem;font-weight:700;color:#3b5580;">دليل التقديم الذكي والوصول للـ HR</div>
+                </div>
+              </div>
+              <div style="text-align:left;font-size:0.78rem;font-weight:800;color:#0047b3;" id="pdfClientTag">إهداء خاص</div>
+            </div>
+
+            <div class="pdf-section-title">📌 أولاً: أفضل طريقة لاستخدام ملفاتك</div>
+            <ul class="pdf-list">
+              <li>ارفع نسخة <strong>PDF</strong> دائماً في مواقع التوظيف أو عند الإرسال عبر الإيميل والواتساب للحفاظ على التنسيق.</li>
+              <li>احتفظ بنسخة <strong>Word</strong> للتعديل مستقبلاً عند إضافة خبرة أو كورس جديد.</li>
+            </ul>
+
+            <div class="pdf-section-title">🚀 ثانياً: خطة التقديم اليومية (15 دقيقة يومياً)</div>
+            <ul class="pdf-list" id="pdfTipsList"></ul>
+
+            <div style="margin-top:14px;padding-top:10px;border-top:1px dashed #cbd5e1;display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;color:#475569;font-weight:700;">
+              <span>نتمنى لك كل التوفيق في خطوتك المهنية القادمة 🌟</span>
+              <span>CV Station Career Services</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const LOGO_DATA = 'data:image/jpeg;base64,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';
+    const REVIEW_KEY = 'cv_station_review_url';
+    const DEFAULT_REVIEW = 'https://www.facebook.com/share/1CHD5iiX5a/';
+
+    const SERVICES = [
+      { id: 'cv_ar_en', label: 'سيرة ذاتية عربي + إنجليزي ATS', checked: true },
+      { id: 'cv_en', label: 'سيرة ذاتية إنجليزي ATS', checked: false },
+      { id: 'cv_ar', label: 'سيرة ذاتية عربي ATS', checked: false },
+      { id: 'europass', label: 'سيرة ذاتية أوروبية EUROPASS', checked: false },
+      { id: 'linkedin', label: 'تطوير حساب LinkedIn', checked: false },
+      { id: 'banner', label: 'تصميم بانر LinkedIn احترافي', checked: false },
+      { id: 'qr', label: 'كود QR للبورتفوليو والشهادات', checked: false },
+      { id: 'cover', label: 'خطاب تغطية Cover Letter', checked: false },
+      { id: 'portals', label: 'إنشاء وتفعيل حسابات التوظيف', checked: false }
+    ];
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(window._tt);
+      window._tt = setTimeout(() => { t.style.display = 'none'; }, 2800);
+    }
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    function renderServices() {
+      const box = document.getElementById('servicesContainer');
+      box.innerHTML = SERVICES.map((s, idx) => `
+        <label class="srv-chip ${s.checked ? 'checked' : ''}" id="chip_${idx}">
+          <input type="checkbox" ${s.checked ? 'checked' : ''} onchange="toggleService(${idx}, this.checked)" />
+          <span>${s.label}</span>
+        </label>
+      `).join('');
+    }
+
+    function toggleService(idx, val) {
+      SERVICES[idx].checked = val;
+      document.getElementById('chip_' + idx).classList.toggle('checked', val);
+      generateOutputs();
+    }
+
+    function applyPreset(type) {
+      SERVICES.forEach(s => s.checked = false);
+      if (type === 'launch') setChecked(['cv_ar_en', 'cover']);
+      else if (type === 'excellence') setChecked(['cv_ar_en', 'linkedin', 'banner', 'cover', 'qr']);
+      else if (type === 'pro') setChecked(['cv_ar_en', 'europass', 'linkedin', 'banner', 'qr', 'cover', 'portals']);
+      renderServices();
+      generateOutputs();
+    }
+
+    function setChecked(ids) {
+      SERVICES.forEach(s => { if (ids.includes(s.id)) s.checked = true; });
+    }
+
+    function saveReviewUrl() {
+      const val = document.getElementById('reviewUrl').value.trim();
+      localStorage.setItem(REVIEW_KEY, val || DEFAULT_REVIEW);
+      generateOutputs();
+    }
+
+    function resetForm() {
+      document.getElementById('clientName').value = '';
+      document.getElementById('clientRole').value = '';
+      document.getElementById('clientPhone').value = '';
+      generateOutputs();
+      showToast('🔄 تم تجهيز النموذج لعميل جديد');
+    }
+
+    function generateOutputs() {
+      const title = document.getElementById('clientTitle').value;
+      const rawName = document.getElementById('clientName').value.trim();
+      const displayName = rawName ? `${title} ${rawName}`.trim() : 'فندم';
+      const role = document.getElementById('clientRole').value.trim();
+      const region = document.getElementById('targetRegion').value;
+      const reviewLink = document.getElementById('reviewUrl').value.trim() || DEFAULT_REVIEW;
+
+      const selected = SERVICES.filter(s => s.checked).map(s => `▫️ ${s.label}`);
+      const servicesBlock = selected.length > 0 ? `\n*الخدمات المرفقة:*\n${selected.join('\n')}\n` : '';
+
+      const deliveryMsg =
+`أهلاً بك يا ${displayName} 🌟
+تم الانتهاء من تجهيز ملفاتك في *CV Station* بأعلى معايير الجودة والـ ATS ✅
+${servicesBlock}
+📌 *ملاحظة سريعة:*
+• استخدم نسخة الـ *PDF* عند التقديم على الوظائف للحفاظ على التنسيق.
+• نسخة الـ *Word* معاك لو حبيت تعدل أي بيانات مستقبلاً.
+• معاك *أسبوع تعديلات مجانية* بالكامل لأي ملاحظة تحب تضيفها.
+
+لو الشغل عجبك، يسعدنا جداً تقييمك الجميل على صفحتنا (مش هياخد ثواني) 🙏💙:
+${reviewLink}
+
+بالتوفيق في خطوتك الجاية يا رب 🚀`;
+
+      document.getElementById('deliveryOutput').value = deliveryMsg;
+
+      const roleHint = role ? ` في مجال *(${role})*` : '';
+      let regionLine = '• ركّز يومياً على حساباتك في منصات التوظيف اللي تم تجهيزها ليك، وفعل إشعارات الوظائف الجديدة.';
+      if (region === 'egypt') {
+        regionLine = '• تابع حساباتك في منصات التوظيف المصرية والعربية اللي تم تجهيزها، وفعل تنبيهات الوظائف اليومية.';
+      } else if (region === 'gulf') {
+        regionLine = '• تابع حساباتك في منصات التوظيف الخليجية والعربية اللي تم تجهيزها، وحدّث حالتك (متاح للعمل فوراً).';
+      }
+
+      const planWaMsg =
+`🎁 *هدية سريعة من CV Station لـ ${displayName}*
+خطوات عملية تساعدك توصل لأفضل الفرص${roleHint} في أسرع وقت:
+
+1️⃣ *التواجد النشط:*
+${regionLine}
+
+2️⃣ *التقديم الذكي:*
+• قدّم على أحدث الوظائف المنشورة خلال آخر 24 ساعة لزيادة فرصة ظهور ملفك في البداية.
+• اكتب رسالة تعريفية قصيرة واحترافية عند الإرسال عبر الإيميل أو LinkedIn.
+
+3️⃣ *توسيع دائرة الوصول:*
+• تواصل مع مسؤولي التوظيف (HR) في الشركات المستهدفة على LinkedIn وابعتلهم ملفك بشكل مباشر.
+
+بالتوفيق دايماً 🌟`;
+
+      document.getElementById('planWaOutput').value = planWaMsg;
+
+      document.getElementById('pdfClientTag').textContent = rawName ? `إهداء إلى: ${displayName}` : 'إهداء خاص من CV Station';
+      const pdfTips = [
+        region === 'egypt'
+          ? 'تابع حساباتك في منصات التوظيف المصرية والعربية المجهزة لك، وفعل إشعارات الوظائف الجديدة يومياً.'
+          : region === 'gulf'
+            ? 'تابع حساباتك في منصات التوظيف الخليجية والعربية المجهزة لك، وتأكد من تفعيل حالة (متاح للعمل فوراً).'
+            : 'تابع حساباتك في منصات التوظيف المجهزة لك باستمرار، وفعل تنبيهات الوظائف المناسبة لمجالك.',
+        `قدّم على الوظائف المنشورة خلال آخر 24 ساعة${role ? ' في مجال (' + role + ')' : ''} لرفع أولوية ظهور سيرتك الذاتية.`,
+        'تواصل مباشرة مع مسؤولي التوظيف (HR) على LinkedIn برسالة قصيرة توضح خبراتك ومرفق معها الـ CV.',
+        'راجع أهم الأسئلة الشائعة في تخصصك قبل أي مقابلة عمل وجهّز أمثلة عملية لإنجازاتك.'
+      ];
+      document.getElementById('pdfTipsList').innerHTML = pdfTips.map(t => `<li>${t}</li>`).join('');
+
+      updateWaLinks();
+    }
+
+    function updateWaLinks() {
+      let phone = document.getElementById('clientPhone').value.replace(/\D/g, '');
+      if (phone.startsWith('01')) phone = '2' + phone;
+      const base = phone ? `https://wa.me/${phone}?text=` : `https://wa.me/?text=`;
+
+      document.getElementById('waDeliveryBtn').href = base + encodeURIComponent(document.getElementById('deliveryOutput').value);
+      document.getElementById('waPlanBtn').href = base + encodeURIComponent(document.getElementById('planWaOutput').value);
+    }
+
+    function copyText(id, toastMsg) {
+      navigator.clipboard.writeText(document.getElementById(id).value);
+      showToast(toastMsg);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('favIcon').href = LOGO_DATA;
+      document.getElementById('appleIcon').href = LOGO_DATA;
+      document.querySelectorAll('.js-logo').forEach(img => { img.src = LOGO_DATA; });
+
+      const savedUrl = localStorage.getItem(REVIEW_KEY);
+      if (savedUrl) document.getElementById('reviewUrl').value = savedUrl;
+      renderServices();
+      generateOutputs();
+    });
+  </script>
+</body>
+</html>
