@@ -459,13 +459,17 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-title">
-            <span>🧾 بيانات إيصال الحجز / العربون</span>
+            <span>🧾 بيانات الإيصال الرسمي / الفاتورة</span>
             <button class="btn btn-outline btn-sm" onclick="regenerateReceiptNo()">🔄 رقم إيصال جديد</button>
           </div>
 
-          <div class="pill-row">
-            <button type="button" class="pill-btn active" id="rcStyle_royal" onclick="setRcStyle('royal')">💙 إيصال أزرق ملكي</button>
-            <button type="button" class="pill-btn" id="rcStyle_classic" onclick="setRcStyle('classic')">🤍 إيصال رسمي أبيض</button>
+          <div class="field">
+            <label>تصميم الإيصال (3 قوالب احترافية)</label>
+            <div class="pill-row">
+              <button type="button" class="pill-btn active" id="rcStyle_executive" onclick="setRcStyle('executive')">🏛️ كحلي وذهبي (Executive)</button>
+              <button type="button" class="pill-btn" id="rcStyle_corporate" onclick="setRcStyle('corporate')">🤍 فاتورة شركات (Corporate)</button>
+              <button type="button" class="pill-btn" id="rcStyle_vip" onclick="setRcStyle('vip')">🖤 أسود وذهبي (VIP)</button>
+            </div>
           </div>
 
           <div class="form-grid">
@@ -474,7 +478,7 @@
               <input type="text" id="rcNo" class="input" dir="ltr" oninput="drawReceipt()" />
             </div>
             <div class="field">
-              <label>التاريخ</label>
+              <label>تاريخ الإصدار</label>
               <input type="date" id="rcDate" class="input" oninput="drawReceipt()" />
             </div>
             <div class="field">
@@ -482,23 +486,27 @@
               <input type="text" id="rcClient" class="input" placeholder="مثال: أ/ كريم حسن" oninput="drawReceipt()" />
             </div>
             <div class="field">
-              <label>رقم الواتساب (للإرسال المباشر)</label>
-              <input type="tel" id="rcPhone" class="input" dir="ltr" placeholder="010xxxxxxxx" oninput="updateReceiptWa()" />
+              <label>رقم واتساب العميل (يظهر على الإيصال + إرسال مباشر)</label>
+              <input type="tel" id="rcPhone" class="input" dir="ltr" placeholder="010xxxxxxxx" oninput="drawReceipt()" />
             </div>
             <div class="field" style="grid-column: 1 / -1;">
-              <label>الباقة / الخدمة المحجوزة *</label>
-              <input type="text" id="rcService" list="rcServicesList" class="input" value="باقة الاحتراف 👑 (CV عربي وإنجليزي + LinkedIn + مواقع التوظيف)" oninput="drawReceipt()" />
+              <label>الباقة / تفاصيل الخدمة المحجوزة *</label>
+              <input type="text" id="rcService" list="rcServicesList" class="input" value="باقة الاحتراف 👑 (CV عربي وإنجليزي ATS + تطوير LinkedIn + مواقع التوظيف)" oninput="drawReceipt()" />
               <datalist id="rcServicesList">
                 <option value="باقة الانطلاق 🚀 (CV عربي وإنجليزي ATS + Cover Letter)"></option>
-                <option value="باقة التميز 💎 (CV ATS + تطوير LinkedIn + QR Code)"></option>
-                <option value="باقة الاحتراف 👑 (CV ATS + LinkedIn + مواقع التوظيف)"></option>
-                <option value="سيرة ذاتية عربي + إنجليزي ATS"></option>
-                <option value="تطوير حساب LinkedIn + تصميم بانر احترافي"></option>
+                <option value="باقة التميز 💎 (CV ATS + تطوير LinkedIn + بانر + QR Code)"></option>
+                <option value="باقة الاحتراف 👑 (CV ATS + تطوير LinkedIn + مواقع التوظيف)"></option>
+                <option value="سيرة ذاتية عربي + إنجليزي متوافقة مع ATS"></option>
+                <option value="تطوير حساب LinkedIn بالكامل + تصميم بانر احترافي"></option>
               </datalist>
             </div>
             <div class="field">
-              <label>إجمالي السعر (ج.م)</label>
+              <label>السعر الأساسي (ج.م)</label>
               <input type="number" id="rcTotal" class="input" value="500" min="0" oninput="drawReceipt()" />
+            </div>
+            <div class="field">
+              <label>الخصم (ج.م — اختياري)</label>
+              <input type="number" id="rcDiscount" class="input" value="0" min="0" oninput="drawReceipt()" />
             </div>
             <div class="field">
               <label>المبلغ المدفوع / العربون (ج.م)</label>
@@ -514,26 +522,26 @@
                 <option value="تحويل بنكي">تحويل بنكي</option>
               </select>
             </div>
-            <div class="field">
+            <div class="field" style="grid-column: 1 / -1;">
               <label>موعد التسليم المتوقع</label>
               <input type="text" id="rcDeadline" class="input" value="خلال 24 ساعة من استلام البيانات" oninput="drawReceipt()" />
             </div>
           </div>
 
           <div class="field" style="margin-top:10px;">
-            <label>ملاحظة إضافية على الإيصال (اختياري)</label>
+            <label>الضمان / ملاحظة أسفل الإيصال</label>
             <input type="text" id="rcNote" class="input" value="يشمل أسبوع تعديلات مجانية لضمان رضاك الكامل" oninput="drawReceipt()" />
           </div>
         </div>
 
         <!-- Receipt Preview -->
         <div class="card">
-          <div class="card-title"><span>👁️ معاينة الإيصال الرسمي (PNG)</span></div>
+          <div class="card-title"><span>👁️ معاينة الإيصال الرسمي المعتمد (PNG)</span></div>
           <div class="canvas-stage">
-            <canvas id="receiptCanvas" width="1080" height="1350"></canvas>
+            <canvas id="receiptCanvas" width="1080" height="1440"></canvas>
           </div>
           <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
-            <button class="btn btn-gold" style="flex:1;" onclick="downloadReceipt()">📥 تحميل الإيصال (PNG)</button>
+            <button class="btn btn-gold" style="flex:1;" onclick="downloadReceipt()">📥 تحميل الإيصال بجودة عالية (PNG)</button>
             <a id="rcWaBtn" href="#" target="_blank" class="btn btn-emerald" style="flex:1;">💬 إرسال رسالة تأكيد واتساب</a>
           </div>
         </div>
@@ -1157,11 +1165,14 @@
     }
 
     /* ==================== TOOL 2: INSTANT RECEIPT MAKER ==================== */
-    let rcStyle = 'royal';
+    let rcStyle = 'executive';
 
     function setRcStyle(s) {
       rcStyle = s;
-      ['royal', 'classic'].forEach(k => document.getElementById('rcStyle_' + k).classList.toggle('active', k === s));
+      ['executive', 'corporate', 'vip'].forEach(k => {
+        const el = document.getElementById('rcStyle_' + k);
+        if (el) el.classList.toggle('active', k === s);
+      });
       drawReceipt();
     }
 
@@ -1171,158 +1182,394 @@
       drawReceipt();
     }
 
+    function wrapReceiptText(ctx, text, maxW, maxLines = 3) {
+      const words = String(text || '').trim().split(/\s+/);
+      const lines = [];
+      let cur = '';
+      for (const w of words) {
+        const test = cur ? cur + ' ' + w : w;
+        if (ctx.measureText(test).width > maxW && cur) {
+          lines.push(cur);
+          cur = w;
+          if (lines.length === maxLines - 1) break;
+        } else {
+          cur = test;
+        }
+      }
+      if (cur) lines.push(cur);
+      return lines;
+    }
+
+    function drawOfficialStamp(ctx, cx, cy, isFull, isDark) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.22); // -12.5 deg authentic tilt
+
+      const col = isFull ? '#059669' : (isDark ? '#f59e0b' : '#0047b3');
+      ctx.strokeStyle = col;
+      ctx.fillStyle = col;
+      ctx.globalAlpha = isDark ? 0.92 : 0.86;
+
+      // Outer double ring
+      ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(0, 0, 96, 0, Math.PI * 2); ctx.stroke();
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(0, 0, 86, 0, Math.PI * 2); ctx.stroke();
+
+      // Inner dashed ring
+      ctx.save();
+      ctx.setLineDash([5, 5]);
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(0, 0, 76, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+
+      // Center ribbon banner
+      ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.94)';
+      ctx.fillRect(-102, -24, 204, 48);
+      ctx.lineWidth = 3;
+      ctx.strokeRect(-102, -24, 204, 48);
+
+      // Top & Bottom stamp text
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = col;
+      ctx.font = '900 18px Montserrat, Inter, sans-serif';
+      ctx.fillText('★ CV STATION ★', 0, -40);
+
+      ctx.font = '800 15px Inter, sans-serif';
+      ctx.fillText(isFull ? 'PAID IN FULL' : 'VERIFIED • OFFICIAL', 0, 52);
+
+      // Center Arabic status
+      ctx.direction = 'rtl';
+      ctx.font = '900 24px Cairo, sans-serif';
+      ctx.fillText(isFull ? 'خالص السداد ✓' : 'حجز معتمد ✓', 0, 8);
+
+      ctx.restore();
+    }
+
+    function drawMiniBarcode(ctx, x, y, w, h, seedStr, color) {
+      ctx.save();
+      ctx.fillStyle = color;
+      let hash = 0;
+      for (let i = 0; i < seedStr.length; i++) hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+      const bars = 46;
+      const step = w / bars;
+      for (let i = 0; i < bars; i++) {
+        const bit = Math.abs((hash * (i + 7) + i * 31) % 7);
+        const bw = bit > 3 ? step * 0.68 : (bit > 1 ? step * 0.38 : 0);
+        if (bw > 0) ctx.fillRect(x + i * step, y, bw, h);
+      }
+      ctx.restore();
+    }
+
     function drawReceipt() {
       const c = document.getElementById('receiptCanvas');
       const ctx = c.getContext('2d');
-      const W = 1080, H = 1350;
-      const isRoyal = rcStyle === 'royal';
+      const W = 1080, H = 1440;
 
       const no = document.getElementById('rcNo').value.trim() || 'CVS-2026-1001';
       const dt = document.getElementById('rcDate').value || todayISO();
       const client = document.getElementById('rcClient').value.trim() || 'عميلنا الكريم';
-      const service = document.getElementById('rcService').value.trim() || 'خدمات السيرة الذاتية ATS';
-      const total = Number(document.getElementById('rcTotal').value || 0);
-      const paid = Number(document.getElementById('rcPaid').value || 0);
-      const rem = Math.max(0, total - paid);
+      const phone = document.getElementById('rcPhone').value.trim();
+      const service = document.getElementById('rcService').value.trim() || 'خدمات السيرة الذاتية المتوافقة مع ATS';
+      const baseTotal = Math.max(0, Number(document.getElementById('rcTotal').value || 0));
+      const discount = Math.max(0, Number(document.getElementById('rcDiscount').value || 0));
+      const netTotal = Math.max(0, baseTotal - discount);
+      const paid = Math.max(0, Number(document.getElementById('rcPaid').value || 0));
+      const rem = Math.max(0, netTotal - paid);
+      const paidPct = netTotal > 0 ? Math.min(100, Math.round((paid / netTotal) * 100)) : (paid > 0 ? 100 : 0);
+      const isFull = rem === 0 && netTotal > 0;
       const method = document.getElementById('rcMethod').value;
-      const deadline = document.getElementById('rcDeadline').value.trim();
+      const deadline = document.getElementById('rcDeadline').value.trim() || 'حسب الاتفاق';
       const note = document.getElementById('rcNote').value.trim();
 
-      // Background
-      if (isRoyal) {
-        const g = ctx.createLinearGradient(0, 0, W, H);
-        g.addColorStop(0, '#041434'); g.addColorStop(0.5, '#0047b3'); g.addColorStop(1, '#0077b6');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      } else {
-        ctx.fillStyle = '#f1f5f9'; ctx.fillRect(0, 0, W, H);
-      }
+      const palettes = {
+        executive: {
+          outer1: '#040e24', outer2: '#0a2252', outer3: '#0047b3',
+          paper: '#ffffff', paperBorder: '#d4af37',
+          head1: '#061738', head2: '#0f2d66', accent: '#d4af37',
+          text: '#071a3e', muted: '#64748b', softBox: '#f8fafc', softBorder: '#e2e8f0',
+          finBox: '#f0f6ff', finBorder: '#bfdbfe', tblHead: '#061738', tblHeadText: '#f8e3a1',
+          dark: false
+        },
+        corporate: {
+          outer1: '#e2e8f0', outer2: '#f1f5f9', outer3: '#e2e8f0',
+          paper: '#ffffff', paperBorder: '#cbd5e1',
+          head1: '#0047b3', head2: '#0077cc', accent: '#00a8e8',
+          text: '#0f172a', muted: '#64748b', softBox: '#f8fafc', softBorder: '#e2e8f0',
+          finBox: '#eff6ff', finBorder: '#bfdbfe', tblHead: '#0047b3', tblHeadText: '#ffffff',
+          dark: false
+        },
+        vip: {
+          outer1: '#09090b', outer2: '#18181b', outer3: '#09090b',
+          paper: '#111217', paperBorder: '#d4af37',
+          head1: '#09090b', head2: '#1f1c14', accent: '#f59e0b',
+          text: '#f8fafc', muted: '#a1a1aa', softBox: '#1a1c24', softBorder: '#2e313d',
+          finBox: '#1c1912', finBorder: 'rgba(212,175,55,0.45)', tblHead: '#272215', tblHeadText: '#fde68a',
+          dark: true
+        }
+      };
+      const pal = palettes[rcStyle] || palettes.executive;
 
-      // Main Receipt Paper Card
-      roundRect(ctx, 56, 56, W - 112, H - 112, 34);
-      ctx.fillStyle = '#ffffff'; ctx.fill();
-      ctx.strokeStyle = isRoyal ? 'rgba(255,255,255,0.4)' : '#cbd5e1';
-      ctx.lineWidth = 4; ctx.stroke();
+      // 1. Outer Background
+      const og = ctx.createLinearGradient(0, 0, W, H);
+      og.addColorStop(0, pal.outer1); og.addColorStop(0.5, pal.outer2); og.addColorStop(1, pal.outer3);
+      ctx.fillStyle = og; ctx.fillRect(0, 0, W, H);
 
-      // Top Header Banner inside Card
+      // 2. Paper Card with subtle shadow
       ctx.save();
-      roundRect(ctx, 56, 56, W - 112, 210, 34);
-      ctx.clip();
-      const hg = ctx.createLinearGradient(56, 56, W - 56, 266);
-      hg.addColorStop(0, '#062356'); hg.addColorStop(1, '#0047b3');
-      ctx.fillStyle = hg; ctx.fillRect(56, 56, W - 112, 210);
+      ctx.shadowColor = 'rgba(0,0,0,0.28)';
+      ctx.shadowBlur = 34;
+      ctx.shadowOffsetY = 14;
+      roundRect(ctx, 44, 44, W - 88, H - 88, 30);
+      ctx.fillStyle = pal.paper; ctx.fill();
       ctx.restore();
 
-      // Logo in Header
+      roundRect(ctx, 44, 44, W - 88, H - 88, 30);
+      ctx.strokeStyle = pal.paperBorder; ctx.lineWidth = 3.5; ctx.stroke();
+
+      // Faint diagonal security watermark inside paper
       ctx.save();
-      const lr = 56, lx = W - 155, ly = 160;
-      ctx.beginPath(); ctx.arc(lx, ly, lr + 4, 0, Math.PI * 2); ctx.fillStyle = '#00a8e8'; ctx.fill();
+      roundRect(ctx, 46, 46, W - 92, H - 92, 28);
+      ctx.clip();
+      ctx.translate(W / 2, H / 2 + 60);
+      ctx.rotate(-0.45);
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = pal.dark ? 'rgba(212,175,55,0.035)' : 'rgba(0,71,179,0.035)';
+      ctx.font = '900 92px Montserrat, sans-serif';
+      ctx.fillText('CV STATION', 0, -20);
+      ctx.font = '800 34px Inter, sans-serif';
+      ctx.fillText('OFFICIAL PAYMENT RECEIPT', 0, 35);
+      ctx.restore();
+
+      // 3. Top Executive Header
+      ctx.save();
+      roundRect(ctx, 44, 44, W - 88, 226, 30);
+      ctx.clip();
+      const hg = ctx.createLinearGradient(44, 44, W - 44, 270);
+      hg.addColorStop(0, pal.head1); hg.addColorStop(1, pal.head2);
+      ctx.fillStyle = hg; ctx.fillRect(44, 44, W - 88, 226);
+
+      // Gold/Accent bottom border on header
+      ctx.fillStyle = pal.accent;
+      ctx.fillRect(44, 262, W - 88, 8);
+      ctx.restore();
+
+      // Logo inside Header
+      ctx.save();
+      const lr = 56, lx = W - 142, ly = 152;
+      ctx.beginPath(); ctx.arc(lx, ly, lr + 5, 0, Math.PI * 2); ctx.fillStyle = pal.accent; ctx.fill();
       ctx.beginPath(); ctx.arc(lx, ly, lr, 0, Math.PI * 2); ctx.clip();
       ctx.fillStyle = '#ffffff'; ctx.fillRect(lx - lr, ly - lr, lr * 2, lr * 2);
       if (logoImg.complete) ctx.drawImage(logoImg, lx - lr, ly - lr, lr * 2, lr * 2);
       ctx.restore();
 
+      // Brand Title (Right)
       ctx.direction = 'rtl';
       ctx.textAlign = 'right';
       ctx.fillStyle = '#ffffff';
       ctx.font = '900 44px Cairo, sans-serif';
-      ctx.fillText('CV Station', W - 235, 152);
-      ctx.fillStyle = '#bae6fd';
-      ctx.font = '700 24px Cairo, sans-serif';
-      ctx.fillText('إيصال استلام وتأكيد حجز رسمي', W - 235, 194);
+      ctx.fillText('CV Station', W - 222, 144);
+      ctx.fillStyle = pal.accent;
+      ctx.font = '800 22px Cairo, sans-serif';
+      ctx.fillText('إيصال دفع وتأكيد حجز رسمي معتمد', W - 222, 184);
+      ctx.fillStyle = 'rgba(255,255,255,0.72)';
+      ctx.font = '600 17px Inter, sans-serif';
+      ctx.fillText('Career Development & ATS Solutions', W - 222, 218);
 
-      // Receipt Number & Date on Left of Header
-      ctx.textAlign = 'left';
-      ctx.fillStyle = '#fde68a';
-      ctx.font = '800 24px Inter, sans-serif';
-      ctx.fillText('#' + no, 100, 148);
-      ctx.fillStyle = '#e0f2fe';
-      ctx.font = '700 22px Inter, sans-serif';
-      ctx.fillText(dt, 100, 186);
+      // Receipt Meta Pill (Left of Header)
+      roundRect(ctx, 84, 92, 290, 120, 18);
+      ctx.fillStyle = 'rgba(255,255,255,0.08)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-      // Status Stamp Badge
-      const isFull = rem === 0 && total > 0;
-      roundRect(ctx, W / 2 - 210, 298, 420, 68, 34);
-      ctx.fillStyle = isFull ? '#dcfce7' : '#e0f2fe'; ctx.fill();
-      ctx.strokeStyle = isFull ? '#10b981' : '#0047b3'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.direction = 'ltr';
       ctx.textAlign = 'center';
-      ctx.fillStyle = isFull ? '#047857' : '#0047b3';
-      ctx.font = '900 30px Cairo, sans-serif';
-      ctx.fillText(isFull ? '✅ تم السداد بالكامل وتأكيد الطلب' : '✅ تم استلام العربون وتأكيد الحجز', W / 2, 343);
+      ctx.fillStyle = pal.accent;
+      ctx.font = '800 16px Inter, sans-serif';
+      ctx.fillText('RECEIPT NO.', 229, 122);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 25px Inter, sans-serif';
+      ctx.fillText('#' + no, 229, 158);
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '700 19px Inter, sans-serif';
+      ctx.fillText('📅 ' + dt, 229, 194);
 
-      // Client & Service Details Box
-      roundRect(ctx, 100, 398, W - 200, 290, 22);
-      ctx.fillStyle = '#f8fafc'; ctx.fill();
-      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 2; ctx.stroke();
+      // 4. Two-Column Info Cards (Client & Payment Details)
+      const boxY = 302, boxH = 166, gap = 22;
+      const boxW = (W - 168 - gap) / 2;
 
-      const rows = [
-        ['اسم العميل:', client],
-        ['الخدمة / الباقة:', service.length > 44 ? service.slice(0, 44) + '...' : service],
-        ['وسيلة الدفع:', method],
-        ['موعد التسليم:', deadline || 'حسب الاتفاق']
-      ];
-      let ry = 456;
-      rows.forEach(([lbl, val], idx) => {
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#64748b';
-        ctx.font = '800 25px Cairo, sans-serif';
-        ctx.fillText(lbl, W - 135, ry);
+      // Right Box: Client Info
+      const rBoxX = W - 84 - boxW;
+      roundRect(ctx, rBoxX, boxY, boxW, boxH, 20);
+      ctx.fillStyle = pal.softBox; ctx.fill();
+      ctx.strokeStyle = pal.softBorder; ctx.lineWidth = 2; ctx.stroke();
 
-        ctx.fillStyle = '#071a3e';
-        ctx.font = '900 26px Cairo, sans-serif';
-        ctx.fillText(val, W - 340, ry);
+      ctx.direction = 'rtl';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.accent;
+      ctx.font = '900 21px Cairo, sans-serif';
+      ctx.fillText('👤 بيانات العميل', rBoxX + boxW - 24, boxY + 42);
 
-        if (idx < rows.length - 1) {
-          ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.moveTo(130, ry + 22); ctx.lineTo(W - 130, ry + 22); ctx.stroke();
-        }
-        ry += 66;
+      ctx.fillStyle = pal.text;
+      ctx.font = '900 28px Cairo, sans-serif';
+      ctx.fillText(client, rBoxX + boxW - 24, boxY + 92);
+
+      ctx.fillStyle = pal.muted;
+      ctx.font = '700 21px Inter, Cairo, sans-serif';
+      ctx.fillText(phone ? ('📱 ' + phone) : 'عميل مميز في CV Station', rBoxX + boxW - 24, boxY + 136);
+
+      // Left Box: Booking & Delivery Info
+      const lBoxX = 84;
+      roundRect(ctx, lBoxX, boxY, boxW, boxH, 20);
+      ctx.fillStyle = pal.softBox; ctx.fill();
+      ctx.strokeStyle = pal.softBorder; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.accent;
+      ctx.font = '900 21px Cairo, sans-serif';
+      ctx.fillText('💳 تفاصيل الحجز والتسليم', lBoxX + boxW - 24, boxY + 42);
+
+      ctx.fillStyle = pal.text;
+      ctx.font = '800 22px Cairo, sans-serif';
+      ctx.fillText('الدفع: ' + method, lBoxX + boxW - 24, boxY + 88);
+
+      ctx.fillStyle = pal.muted;
+      ctx.font = '700 20px Cairo, sans-serif';
+      const dlShort = deadline.length > 32 ? deadline.slice(0, 32) + '...' : deadline;
+      ctx.fillText('التسليم: ' + dlShort, lBoxX + boxW - 24, boxY + 134);
+
+      // 5. Structured Service Table (جدول تفاصيل الخدمة)
+      const tblY = 496, tblW = W - 168;
+      // Table Header
+      roundRect(ctx, 84, tblY, tblW, 58, 14);
+      ctx.fillStyle = pal.tblHead; ctx.fill();
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.tblHeadText;
+      ctx.font = '900 22px Cairo, sans-serif';
+      ctx.fillText('الخدمة / الباقة المتفق عليها', W - 112, tblY + 37);
+
+      ctx.textAlign = 'left';
+      ctx.fillText('القيمة', 112, tblY + 37);
+
+      // Table Body Row (Auto-wrapped service text)
+      ctx.font = '800 25px Cairo, sans-serif';
+      const srvLines = wrapReceiptText(ctx, service, tblW - 240, 3);
+      const rowH = Math.max(96, srvLines.length * 38 + 42);
+
+      roundRect(ctx, 84, tblY + 66, tblW, rowH, 16);
+      ctx.fillStyle = pal.softBox; ctx.fill();
+      ctx.strokeStyle = pal.softBorder; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.text;
+      ctx.font = '800 25px Cairo, sans-serif';
+      srvLines.forEach((ln, i) => {
+        ctx.fillText(ln, W - 112, tblY + 112 + i * 38);
       });
 
-      // Financial Breakdown Box
-      roundRect(ctx, 100, 720, W - 200, 275, 24);
-      ctx.fillStyle = '#eff6ff'; ctx.fill();
-      ctx.strokeStyle = '#bfdbfe'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.textAlign = 'left';
+      ctx.fillStyle = pal.text;
+      ctx.font = '900 28px Inter, Cairo, sans-serif';
+      ctx.fillText(fmtMoney(baseTotal), 112, tblY + 66 + rowH / 2 + 10);
 
-      const finRows = [
-        ['إجمالي قيمة الخدمة', fmtMoney(total), '#071a3e', 30],
-        ['المبلغ المدفوع الآن', fmtMoney(paid), '#059669', 34],
-        ['المبلغ المتبقي عند التسليم', fmtMoney(rem), rem > 0 ? '#dc2626' : '#059669', 34]
-      ];
-      let fy = 790;
-      finRows.forEach(([lbl, val, col, sz], idx) => {
+      // 6. Financial Summary Card + Payment Progress Bar
+      const finY = tblY + 66 + rowH + 26;
+      const finH = discount > 0 ? 355 : 295;
+      roundRect(ctx, 84, finY, tblW, finH, 22);
+      ctx.fillStyle = pal.finBox; ctx.fill();
+      ctx.strokeStyle = pal.finBorder; ctx.lineWidth = 2.5; ctx.stroke();
+
+      // Progress Bar Header inside Fin Card
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.muted;
+      ctx.font = '800 20px Cairo, sans-serif';
+      ctx.fillText(`نسبة السداد المكتملة: ${paidPct}%`, W - 118, finY + 42);
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = isFull ? '#10b981' : pal.accent;
+      ctx.font = '900 21px Cairo, sans-serif';
+      ctx.fillText(isFull ? '✅ مدفوع بالكامل' : '⏳ عربون مؤكد', 118, finY + 42);
+
+      // Bar Track
+      const barX = 118, barY = finY + 58, barW = tblW - 68, barH = 16;
+      roundRect(ctx, barX, barY, barW, barH, 8);
+      ctx.fillStyle = pal.dark ? 'rgba(255,255,255,0.12)' : '#dbeafe'; ctx.fill();
+      if (paidPct > 0) {
+        const fillW = Math.max(18, (barW * paidPct) / 100);
+        roundRect(ctx, barX + (barW - fillW), barY, fillW, barH, 8);
+        ctx.fillStyle = isFull ? '#10b981' : '#0066dd'; ctx.fill();
+      }
+
+      // Financial Lines
+      const finItems = [];
+      if (discount > 0) {
+        finItems.push(['الخصم المطبق', '- ' + fmtMoney(discount), '#f59e0b', 26]);
+        finItems.push(['صافي الإجمالي بعد الخصم', fmtMoney(netTotal), pal.text, 28]);
+      } else {
+        finItems.push(['إجمالي قيمة الخدمة', fmtMoney(netTotal), pal.text, 28]);
+      }
+      finItems.push(['المبلغ المدفوع الآن', fmtMoney(paid), '#10b981', 34]);
+      finItems.push(['المبلغ المتبقي عند التسليم', fmtMoney(rem), rem > 0 ? '#ef4444' : '#10b981', 34]);
+
+      let fy = finY + 124;
+      finItems.forEach(([lbl, val, col, sz], idx) => {
         ctx.textAlign = 'right';
-        ctx.fillStyle = '#334155';
-        ctx.font = '800 26px Cairo, sans-serif';
-        ctx.fillText(lbl, W - 140, fy);
+        ctx.fillStyle = pal.dark ? '#cbd5e1' : '#334155';
+        ctx.font = '800 24px Cairo, sans-serif';
+        ctx.fillText(lbl, W - 118, fy);
 
         ctx.textAlign = 'left';
         ctx.fillStyle = col;
         ctx.font = `900 ${sz}px Inter, Cairo, sans-serif`;
-        ctx.fillText(val, 140, fy);
+        ctx.fillText(val, 118, fy);
 
-        if (idx < finRows.length - 1) {
-          ctx.strokeStyle = '#bfdbfe'; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.moveTo(135, fy + 26); ctx.lineTo(W - 135, fy + 26); ctx.stroke();
+        if (idx < finItems.length - 1) {
+          ctx.strokeStyle = pal.dark ? 'rgba(255,255,255,0.08)' : '#dbeafe';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(118, fy + 20); ctx.lineTo(W - 118, fy + 20); ctx.stroke();
         }
-        fy += 82;
+        fy += 64;
       });
 
-      // Guarantee / Note Box
+      // 7. Guarantee Note + Signature + Official Stamp Area
+      const botY = finY + finH + 26;
       if (note) {
-        roundRect(ctx, 100, 1030, W - 200, 92, 18);
-        ctx.fillStyle = '#fffbeb'; ctx.fill();
-        ctx.strokeStyle = '#fcd34d'; ctx.lineWidth = 2; ctx.stroke();
+        roundRect(ctx, 84, botY, tblW, 72, 16);
+        ctx.fillStyle = pal.dark ? 'rgba(245,158,11,0.12)' : '#fffbeb'; ctx.fill();
+        ctx.strokeStyle = pal.dark ? 'rgba(245,158,11,0.4)' : '#fcd34d'; ctx.lineWidth = 2; ctx.stroke();
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#92400e';
-        ctx.font = '800 24px Cairo, sans-serif';
-        ctx.fillText('📌 ' + note, W / 2, 1085);
+        ctx.fillStyle = pal.dark ? '#fde68a' : '#92400e';
+        ctx.font = '800 22px Cairo, sans-serif';
+        ctx.fillText('🛡️ ' + note, W / 2, botY + 44);
       }
 
-      // Footer
+      // Draw Tilted Official Circular Stamp (Bottom Left)
+      const stampY = Math.min(H - 185, botY + 150);
+      drawOfficialStamp(ctx, 215, stampY, isFull, pal.dark);
+
+      // Authorized Signature & Barcode (Bottom Right)
+      ctx.direction = 'rtl';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = pal.muted;
+      ctx.font = '700 19px Cairo, sans-serif';
+      ctx.fillText('توقيع الإدارة المعتمدة', W - 110, stampY - 26);
+
+      ctx.fillStyle = pal.text;
+      ctx.font = '900 28px Cairo, sans-serif';
+      ctx.fillText('إدارة CV Station', W - 110, stampY + 16);
+
+      ctx.strokeStyle = pal.accent; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(W - 320, stampY + 32); ctx.lineTo(W - 110, stampY + 32); ctx.stroke();
+
+      // Serial Barcode at Very Bottom Center
+      drawMiniBarcode(ctx, W / 2 - 140, H - 134, 280, 34, no + dt, pal.dark ? 'rgba(255,255,255,0.45)' : '#475569');
+      ctx.direction = 'ltr';
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#64748b';
-      ctx.font = '700 22px Cairo, sans-serif';
-      ctx.fillText('شكراً لثقتك في CV Station — يسعدنا دائماً دعم مسيرتك المهنية 🌟', W / 2, 1215);
+      ctx.fillStyle = pal.muted;
+      ctx.font = '700 16px Inter, sans-serif';
+      ctx.fillText(`${no}  •  VERIFIED BY CV STATION SYSTEM`, W / 2, H - 78);
 
       updateReceiptWa();
     }
@@ -1332,17 +1579,20 @@
       if (phone.startsWith('01')) phone = '2' + phone;
       const client = document.getElementById('rcClient').value.trim() || 'فندم';
       const service = document.getElementById('rcService').value.trim();
-      const paid = Number(document.getElementById('rcPaid').value || 0);
-      const total = Number(document.getElementById('rcTotal').value || 0);
-      const rem = Math.max(0, total - paid);
+      const baseTotal = Math.max(0, Number(document.getElementById('rcTotal').value || 0));
+      const discount = Math.max(0, Number(document.getElementById('rcDiscount').value || 0));
+      const netTotal = Math.max(0, baseTotal - discount);
+      const paid = Math.max(0, Number(document.getElementById('rcPaid').value || 0));
+      const rem = Math.max(0, netTotal - paid);
       const deadline = document.getElementById('rcDeadline').value.trim();
       const no = document.getElementById('rcNo').value.trim();
 
+      const discLine = discount > 0 ? `\n▫️ الخصم: ${fmtMoney(discount)} (الصافي: ${fmtMoney(netTotal)})` : '';
       const msg =
 `أهلاً بك يا ${client} 🌟
 تم استلام مبلغ *${fmtMoney(paid)}* وتأكيد حجز طلبك في *CV Station* بنجاح ✅
 ▫️ رقم الإيصال: #${no}
-▫️ الخدمة: ${service}
+▫️ الخدمة: ${service}${discLine}
 ▫️ المتبقي عند التسليم: ${fmtMoney(rem)}
 ▫️ التسليم المتوقع: ${deadline}
 
@@ -1359,7 +1609,7 @@
       a.download = `CV-Station-Receipt-${no}.png`;
       a.href = c.toDataURL('image/png');
       a.click();
-      showToast('📥 تم تحميل الإيصال كصورة PNG!');
+      showToast('📥 تم تحميل الإيصال الرسمي بجودة عالية PNG!');
     }
 
     /* ==================== TOOL 3: LIVE ORDER TRACKER ==================== */
@@ -1437,6 +1687,11 @@
     }
 
     /* ==================== TOOL 4: DESIGNER PORTAL ==================== */
+    let currentDesId = '';
+    let desFilterStatus = 'all'; // 'all' | 'active' | 'done'
+    let desFilterMonth = 'all';
+    let desSearchQuery = '';
+
     function populateAdminDesignerSelect() {
       const sel = document.getElementById('adminDesignerSelect');
       if (!sel) return;
@@ -1461,7 +1716,23 @@
       showToast('📋 تم نسخ الرابط الخاص للمصمم (معزول تماماً عن حساباتك)!');
     }
 
+    function setDesFilterStatus(st) {
+      desFilterStatus = st;
+      renderDesignerPortal(currentDesId);
+    }
+
+    function setDesFilterMonth(m) {
+      desFilterMonth = m;
+      renderDesignerPortal(currentDesId);
+    }
+
+    function setDesSearch(q) {
+      desSearchQuery = q;
+      renderDesignerPortal(currentDesId);
+    }
+
     function renderDesignerPortal(desId) {
+      currentDesId = desId;
       const box = document.getElementById('designerPortalContent');
       const des = (crmData.designers || []).find(d => d.id === desId);
       if (!des) {
@@ -1469,14 +1740,41 @@
         return;
       }
 
-      const myOrders = (crmData.orders || []).filter(o => o.designerId === desId && o.status !== 'cancelled');
+      const myOrders = (crmData.orders || [])
+        .filter(o => o.designerId === desId && o.status !== 'cancelled')
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+
       const activeOrders = myOrders.filter(o => ['new', 'progress', 'revision'].includes(o.status));
       const doneOrders = myOrders.filter(o => o.status === 'done');
-      const myPayouts = (crmData.payouts || []).filter(p => p.designerId === desId);
+      const myPayouts = (crmData.payouts || [])
+        .filter(p => p.designerId === desId)
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
 
+      // Financial KPIs (All-time)
       const earned = doneOrders.reduce((s, o) => s + Number(o.designerCost || 0), 0);
+      const pendingEarned = activeOrders.reduce((s, o) => s + Number(o.designerCost || 0), 0);
       const paid = myPayouts.reduce((s, p) => s + Number(p.amount || 0), 0);
       const balance = earned - paid;
+
+      // Collect unique months for dropdown
+      const months = Array.from(new Set(myOrders.map(o => String(o.date || '').slice(0, 7)).filter(Boolean))).sort().reverse();
+      if (desFilterMonth !== 'all' && !months.includes(desFilterMonth)) desFilterMonth = 'all';
+
+      // Apply Filters
+      const q = desSearchQuery.trim().toLowerCase();
+      const filteredOrders = myOrders.filter(o => {
+        if (desFilterStatus === 'active' && !['new', 'progress', 'revision'].includes(o.status)) return false;
+        if (desFilterStatus === 'done' && o.status !== 'done') return false;
+        if (desFilterMonth !== 'all' && !String(o.date || '').startsWith(desFilterMonth)) return false;
+        if (q) {
+          const hay = `${o.client || ''} ${o.service || ''} ${o.notes || ''}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const filteredActive = filteredOrders.filter(o => ['new', 'progress', 'revision'].includes(o.status));
+      const filteredDone = filteredOrders.filter(o => o.status === 'done');
 
       const stLabels = { new: '🆕 جديد', progress: '⚡ قيد التنفيذ', revision: '✏️ تعديل', done: '✅ تم التسليم' };
       const stCls = { new: 'st-new', progress: 'st-progress', revision: 'st-revision', done: 'st-done' };
@@ -1486,7 +1784,7 @@
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
             <div>
               <h2 style="font-weight:900;font-size:1.25rem;">👨‍💻 بوابة المصمم: ${escapeHtml(des.name)}</h2>
-              <p style="font-size:0.82rem;color:var(--text-muted);font-weight:700;">${escapeHtml(des.role || 'فريق CV Station')} • التاسكات النشطة: ${activeOrders.length} • المنجزة: ${doneOrders.length}</p>
+              <p style="font-size:0.82rem;color:var(--text-muted);font-weight:700;">${escapeHtml(des.role || 'فريق CV Station')} • إجمالي التاسكات: ${myOrders.length} (نشط: ${activeOrders.length} | منفّذ: ${doneOrders.length})</p>
             </div>
             <button class="btn btn-outline btn-sm" onclick="syncFromCRM(true)">🔄 تحديث الحساب</button>
           </div>
@@ -1501,25 +1799,46 @@
               <div class="k-val" style="color:var(--emerald);">${fmtMoney(paid)}</div>
             </div>
             <div class="kpi-box">
-              <div class="k-lbl">الرصيد المتبقي لك</div>
+              <div class="k-lbl">الرصيد المتبقي لك الآن</div>
               <div class="k-val" style="color:${balance>0?'var(--danger)':'var(--emerald)'};">${fmtMoney(balance)}</div>
+            </div>
+            <div class="kpi-box">
+              <div class="k-lbl">عمولة تاسكات قيد التنفيذ</div>
+              <div class="k-val" style="color:var(--purple);">${fmtMoney(pendingEarned)}</div>
+            </div>
+          </div>
+
+          <!-- Filters Bar -->
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);">
+            <div class="pill-row" style="margin-bottom:0;">
+              <button type="button" class="pill-btn ${desFilterStatus==='all'?'active':''}" onclick="setDesFilterStatus('all')">📋 كل التاسكات (${myOrders.length})</button>
+              <button type="button" class="pill-btn ${desFilterStatus==='active'?'active':''}" onclick="setDesFilterStatus('active')">🔥 قيد التنفيذ (${activeOrders.length})</button>
+              <button type="button" class="pill-btn ${desFilterStatus==='done'?'active':''}" onclick="setDesFilterStatus('done')">✅ المنفّذة والمسلمة (${doneOrders.length})</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <select class="input" style="width:auto;min-width:140px;padding:7px 10px;" onchange="setDesFilterMonth(this.value)">
+                <option value="all" ${desFilterMonth==='all'?'selected':''}>📅 كل الشهور</option>
+                ${months.map(m => `<option value="${m}" ${desFilterMonth===m?'selected':''}>شهر ${m}</option>`).join('')}
+              </select>
+              <input type="search" class="input" style="width:190px;padding:7px 10px;" placeholder="🔍 بحث باسم العميل..." value="${escapeHtml(desSearchQuery)}" oninput="setDesSearch(this.value)" />
             </div>
           </div>
         </div>
 
+        ${(desFilterStatus === 'all' || desFilterStatus === 'active') ? `
         <div class="card">
-          <div class="card-title"><span>🔥 التاسكات المفتوحة حالياً (${activeOrders.length})</span></div>
-          ${activeOrders.length === 0
-            ? `<p style="text-align:center;color:var(--text-muted);font-weight:700;padding:16px;">لا توجد تاسكات مفتوحة حالياً 🎉</p>`
+          <div class="card-title"><span>🔥 التاسكات المفتوحة / قيد التنفيذ (${filteredActive.length})</span></div>
+          ${filteredActive.length === 0
+            ? `<p style="text-align:center;color:var(--text-muted);font-weight:700;padding:14px;">لا توجد تاسكات مفتوحة في هذا الفلتر 🎉</p>`
             : `<div class="tasks-grid">
-                ${activeOrders.map(o => `
+                ${filteredActive.map(o => `
                   <div class="task-card">
                     <div style="display:flex;justify-content:space-between;gap:6px;margin-bottom:6px;">
                       <strong style="font-size:0.95rem;">${escapeHtml(o.client)}</strong>
                       <span class="badge ${stCls[o.status]||'st-new'}">${stLabels[o.status]||o.status}</span>
                     </div>
                     <div style="font-size:0.82rem;color:var(--text-secondary);font-weight:700;">📌 ${escapeHtml(o.service)}</div>
-                    <div style="font-size:0.8rem;color:var(--text-muted);font-weight:700;margin-top:3px;">⏱️ التسليم: ${escapeHtml(o.deadline || 'غير محدد')} • 📅 ${o.date}</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);font-weight:700;margin-top:3px;">⏱️ التسليم: ${escapeHtml(o.deadline || 'غير محدد')} • 📅 ${escapeHtml(o.date || '')}</div>
                     <div style="font-size:0.84rem;color:var(--purple);font-weight:900;margin-top:6px;">💰 نسبتك في التاسك: ${fmtMoney(o.designerCost)}</div>
                     ${o.notes ? `<div style="font-size:0.78rem;background:var(--bg-soft);padding:6px 9px;border-radius:8px;margin-top:6px;">📝 ${escapeHtml(o.notes)}</div>` : ''}
                   </div>
@@ -1527,6 +1846,43 @@
               </div>`
           }
         </div>
+        ` : ''}
+
+        ${(desFilterStatus === 'all' || desFilterStatus === 'done') ? `
+        <div class="card">
+          <div class="card-title">
+            <span>✅ سجل التاسكات المنفّذة والمسلمة (${filteredDone.length})</span>
+            <span class="badge st-done">إجمالي عمولة السجل: ${fmtMoney(filteredDone.reduce((s, o) => s + Number(o.designerCost || 0), 0))}</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>التاريخ</th>
+                  <th>اسم العميل</th>
+                  <th>الخدمة المنفّذة</th>
+                  <th>الحالة</th>
+                  <th>نسبتك</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filteredDone.length === 0
+                  ? `<tr><td colspan="5" style="text-align:center;color:var(--text-muted);font-weight:700;padding:16px;">لا توجد تاسكات منفّذة في هذا الفلتر</td></tr>`
+                  : filteredDone.map(o => `
+                      <tr>
+                        <td style="white-space:nowrap;">${escapeHtml(o.date || '-')}</td>
+                        <td style="font-weight:800;">${escapeHtml(o.client)}</td>
+                        <td>${escapeHtml(o.service)}${o.notes ? `<div style="font-size:0.74rem;color:var(--text-muted);">📝 ${escapeHtml(o.notes)}</div>` : ''}</td>
+                        <td><span class="badge st-done">✅ تم التسليم</span></td>
+                        <td style="color:var(--purple);font-weight:900;white-space:nowrap;">${fmtMoney(o.designerCost)}</td>
+                      </tr>
+                    `).join('')
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        ` : ''}
 
         <div class="card">
           <div class="card-title"><span>🧾 سجل التحويلات المالية لك (${myPayouts.length})</span></div>
@@ -1536,7 +1892,7 @@
               <tbody>
                 ${myPayouts.length === 0
                   ? `<tr><td colspan="4" style="text-align:center;color:var(--text-muted);font-weight:700;">لا توجد تحويلات مسجلة بعد</td></tr>`
-                  : myPayouts.map(p => `<tr><td>${p.date}</td><td style="color:var(--emerald);font-weight:900;">${fmtMoney(p.amount)}</td><td>${escapeHtml(p.method)}</td><td>${escapeHtml(p.notes||'-')}</td></tr>`).join('')
+                  : myPayouts.map(p => `<tr><td>${escapeHtml(p.date || '-')}</td><td style="color:var(--emerald);font-weight:900;">${fmtMoney(p.amount)}</td><td>${escapeHtml(p.method)}</td><td>${escapeHtml(p.notes||'-')}</td></tr>`).join('')
                 }
               </tbody>
             </table>
